@@ -1,2 +1,6 @@
 name: Setup cargo component
 description: 🦀 Install the cargo component subcommand for GitHub Actions
+
+branding:
+  icon: play
+  color: blue

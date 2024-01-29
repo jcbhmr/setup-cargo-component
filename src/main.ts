@@ -53,14 +53,14 @@ if (!found) {
     found += ".exe";
   }
   await mkdir(`${found}-folder`);
-  await rename(found, join(`${found}-folder`, "cargo-component"));
+  await rename(
+    found,
+    join(
+      `${found}-folder`,
+      "cargo-component" + (process.platform === "win32" ? ".exe" : "")
+    )
+  );
   found = `${found}-folder`;
-  if (process.platform === "win32") {
-    await rename(
-      join(found, "cargo-component"),
-      join(found, "cargo-component.exe")
-    );
-  }
   found = await tc.cacheDir(found, "cargo-component", version);
 }
 core.addPath(found);

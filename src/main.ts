@@ -44,6 +44,7 @@ if (!found) {
     "win32,x64": "x86_64-pc-windows-gnu",
   }[[process.platform, process.arch].toString()]!;
   const file = `cargo-component-${target}`;
+  const exeExt = process.platform === "win32" ? ".exe" : "";
 
   const url = `https://github.com/bytecodealliance/cargo-component/releases/download/v${version}/${file}`;
   core.info(`Fetching from '${url}'`);
@@ -53,14 +54,9 @@ if (!found) {
     found += ".exe";
   }
   await mkdir(`${found}-folder`);
-  await rename(
-    found,
-    join(
-      `${found}-folder`,
-      "cargo-component" + (process.platform === "win32" ? ".exe" : "")
-    )
-  );
+  await rename(found, join(`${found}-folder`, `cargo-component${exeExt}`));
   found = `${found}-folder`;
+  core.info(`Caching '${found}' which has 'cargo-component${exeExt}' in it`);
   found = await tc.cacheDir(found, "cargo-component", version);
 }
 core.addPath(found);

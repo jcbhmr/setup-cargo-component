@@ -4,3 +4,21 @@ description: 🦀 Install the cargo component subcommand for GitHub Actions
 branding:
   icon: play
   color: blue
+
+inputs:
+  cargo-component-version:
+    description: Which version of cargo-component to install. This can be an exact version specifier such as '0.7.0' or a semver range like '~0.7.0' or '0.x'. Use 'latest' to always install the latest release. Defaults to 'latest'.
+    default: latest
+  cargo-component-token:
+    description: The GitHub token to use when fetching the version list from bytecodealliance/cargo-component. You shouldn't have to touch this. The default is the 'github.token' if you're on github.com or unauthenticated (rate limited) if you're not on github.com.
+    default: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+
+outputs:
+  cargo-component-version:
+    description: The version of cargo-component that was installed. This will be something like '0.7.0' or similar.
+  cache-hit:
+    description: Whether or not cargo-component was restored from the runner's cache or download anew.
+
+runs:
+  using: node20
+  main: dist/main.js

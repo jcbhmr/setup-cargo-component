@@ -45,7 +45,7 @@ if (!found) {
   }[[process.platform, process.arch].toString()]!;
   const file = `cargo-component-${target}`;
 
-  const url = `https://github.com/bytecodealliance/cargo-component/releases/download/cargo-component-cli-${version}/${file}`;
+  const url = `https://github.com/bytecodealliance/cargo-component/releases/download/v${version}/${file}`;
   core.info(`Fetching from '${url}'`);
   found = await tc.downloadTool(url);
   if (process.platform === "win32") {

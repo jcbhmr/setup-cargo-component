@@ -5,7 +5,7 @@ import * as tc from "@actions/tool-cache";
 import * as semver from "semver";
 import { createUnauthenticatedAuth } from "@octokit/auth-unauthenticated";
 import { join } from "node:path";
-import { mkdir, rename } from "node:fs/promises";
+import { chmod, mkdir, rename } from "node:fs/promises";
 
 const token = core.getInput("cargo-component-token");
 const octokit = token
@@ -49,6 +49,7 @@ if (!found) {
   const url = `https://github.com/bytecodealliance/cargo-component/releases/download/v${version}/${file}`;
   core.info(`Fetching from '${url}'`);
   found = await tc.downloadTool(url);
+  await chmod(found, 0o755);
   await mkdir(`${found}-folder`);
   await rename(found, join(`${found}-folder`, `cargo-component${exeExt}`));
   found = `${found}-folder`;

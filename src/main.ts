@@ -49,10 +49,6 @@ if (!found) {
   const url = `https://github.com/bytecodealliance/cargo-component/releases/download/v${version}/${file}`;
   core.info(`Fetching from '${url}'`);
   found = await tc.downloadTool(url);
-  if (process.platform === "win32") {
-    await rename(found, found + ".exe");
-    found += ".exe";
-  }
   await mkdir(`${found}-folder`);
   await rename(found, join(`${found}-folder`, `cargo-component${exeExt}`));
   found = `${found}-folder`;

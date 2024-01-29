@@ -38,10 +38,10 @@ let found = tc.find("cargo-component", version);
 core.setOutput("cache-hit", !!found);
 if (!found) {
   const target = {
-    "darwin,x64": "x86_64-macos",
-    "darwin,arm64": "aarch64-macos",
-    "linux,x64": "x86_64-linux",
-    "win32,x64": "x86_64-windows",
+    "darwin,x64": "x86_64-apple-darwin",
+    "darwin,arm64": "aarch64-apple-darwin",
+    "linux,x64": "x86_64-unknown-linux-gnu",
+    "win32,x64": "x86_64-pc-windows-gnu",
   }[[process.platform, process.arch].toString()]!;
   const file = `cargo-component-${target}`;
 
